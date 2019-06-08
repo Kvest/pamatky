@@ -1,6 +1,5 @@
 package com.kvest.pamatky.di
 
-import android.util.Log
 import com.kvest.pamatky.api.SightsApi
 import com.squareup.moshi.Moshi
 import okhttp3.OkHttpClient
@@ -18,6 +17,7 @@ val apiModule = module {
 private val CONNECT_TIMEOUT_SECONDS = 30L
 private val READ_TIMEOUT_SECONDS = 60L
 private val BASE_URL = "https://klickpamatkam.cz/"
+val POTO_URL = "https://klickpamatkam.cz/Api/v1/Soubor/%s"
 
 private fun buildOkHttpClient(): OkHttpClient {
     val okHttpBuilder = OkHttpClient.Builder()

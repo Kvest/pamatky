@@ -1,13 +1,30 @@
 package com.kvest.pamatky.repository
 
-import android.util.Log
 import com.kvest.pamatky.api.SightsApi
+import com.kvest.pamatky.storage.dao.SightDAO
+import com.kvest.pamatky.utils.sightToEntity
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
+import java.lang.Exception
 
 class SightsRepositoryImpl(
-    private val sightsApi: SightsApi
+    private val sightsApi: SightsApi,
+    private val sightDAO: SightDAO
 ) : SightsRepository {
-    override suspend fun updateSights() {
-        val sights = sightsApi.getSights()
-        Log.d("KVEST_TAG", "downloaded ${sights.size}")
+    override suspend fun updateSights(): Boolean {
+        try {
+            //retrieve up-to-date sights
+            val sights = sightsApi.getSights()
+
+            //store sights to the local DB
+            sightDAO.deleteAll()
+
+            val entities = withContext(Dispatchers.Default) { sights.map(::sightToEntity) }
+            sightDAO.insertSights(entities)
+        } catch (ex: Exception) {
+            return false
+        }
+
+        return true
     }
 }

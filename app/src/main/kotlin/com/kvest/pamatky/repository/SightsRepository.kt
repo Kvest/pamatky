@@ -1,5 +1,5 @@
 package com.kvest.pamatky.repository
 
 interface SightsRepository {
-    suspend fun updateSights()
+    suspend fun updateSights(): Boolean
 }

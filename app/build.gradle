@@ -43,6 +43,11 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$versions.lifecycle_viewmodel_ktx"
     kapt "androidx.lifecycle:lifecycle-compiler:$versions.lifecycle"
 
+    implementation "androidx.room:room-runtime:$versions.room"
+    kapt "androidx.room:room-compiler:$versions.room"
+    // Kotlin Extensions and Coroutines support for Room
+    implementation "androidx.room:room-ktx:$versions.room"
+
     //databinding
     kapt "com.android.databinding:compiler:$versions.databinding"
 

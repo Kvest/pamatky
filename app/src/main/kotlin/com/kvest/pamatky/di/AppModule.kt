@@ -8,7 +8,7 @@ import org.koin.dsl.module
 
 val appModule = module {
     // single instance of SightsRepository
-    single<SightsRepository> { SightsRepositoryImpl(get()) }
+    single<SightsRepository> { SightsRepositoryImpl(get(), get()) }
 
     viewModel { TestViewModel(get()) }
 }
