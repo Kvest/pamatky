@@ -12,7 +12,7 @@
             android:theme="@style/AppTheme"
             android:name=".SightsApplication">
         <activity
-            android:name=".ui.SplashActivity"
+            android:name=".ui.main.MainActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <category android:name="android.intent.category.LAUNCHER" />

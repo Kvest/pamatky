@@ -15,7 +15,6 @@ val dbModule = module {
     }
 
     single {
-        val db: SightDatabase = get()
-        db.sightDao()
+        (get() as SightDatabase).sightDao()
     }
 }

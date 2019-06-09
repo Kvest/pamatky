@@ -9,7 +9,7 @@ import com.kvest.pamatky.storage.converter.ListOfStringConverter
 @Entity(tableName = "sights")
 @TypeConverters(ListOfStringConverter::class)
 data class SightEntity(
-    @PrimaryKey val guid: String,
+    @PrimaryKey @ColumnInfo(name = "guid") val guid: String,
     @ColumnInfo(name = "name") val name: String,
     @ColumnInfo(name = "slogan") val slogan: String,
     @ColumnInfo(name = "description") val description: String,
