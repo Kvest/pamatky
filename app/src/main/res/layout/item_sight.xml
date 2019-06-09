@@ -1,10 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:bind="http://schemas.android.com/apk/res-auto">
     <data>
-        <variable name="item" type="com.kvest.pamatky.storage.dto.BasicSight"/>
+        <variable
+            name="item"
+            type="com.kvest.pamatky.storage.dto.BasicSight"/>
+        <variable
+            name="handler"
+            type="com.kvest.pamatky.ui.main.MainListHandler"/>
     </data>
-    <TextView
+    <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@{item.name}"/>
+        android:layout_marginBottom="12dip"
+        app:cardElevation="4dip"
+        app:cardCornerRadius="8dip"
+        android:onClick="@{() -> handler.onSightSelected(item)}">
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            bind:image="@{item.profilePhotoSmall}"
+            bind:placeholder="@{@drawable/list_placeholder}"
+            android:foreground="#55000000"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="12dp"
+            android:layout_marginVertical="8dip"
+            android:text="@{item.name}"
+            android:textColor="#ffffff"
+            android:textAppearance="@style/TextAppearance.AppCompat.Headline"/>
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="12dp"
+            android:layout_marginVertical="8dip"
+            app:srcCompat="@drawable/ic_location"
+            android:layout_gravity="end|bottom"
+            android:onClick="@{() -> handler.onShowOnMap(item)}"/>
+    </com.google.android.material.card.MaterialCardView>
 </layout>

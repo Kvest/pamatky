@@ -25,6 +25,7 @@ ext {
     versions = [
             appcompat                   : '1.0.0',
             recyclerview                : '1.0.0',
+            material                    : '1.0.0-rc01',
             databinding                 : '2.3.3',
             lifecycle                   : '2.0.0',
             lifecycle_viewmodel_ktx     : '2.1.0-beta01',
@@ -34,7 +35,8 @@ ext {
             coroutines                  : '1.2.1',
             retrofit                    : '2.6.0',
             okhttp                      : '4.0.0-RC1',
-            koin                        : '2.0.1'
+            koin                        : '2.0.1',
+            glide                       : '4.9.0'
     ]
 }
 

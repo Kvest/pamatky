@@ -5,4 +5,6 @@
     android:id="@+id/sightsList"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:paddingHorizontal="12dip"
+    android:paddingTop="12dip"
     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>

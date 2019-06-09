@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.kvest.pamatky.BR
 import com.kvest.pamatky.R
 import com.kvest.pamatky.ext.observe
 import kotlinx.android.synthetic.main.fragment_sights_list.*
@@ -29,8 +30,7 @@ class SightsListFragment : Fragment() {
         sightsList.adapter = adapter
 
         adapter.holderInit = {
-            //TODO
-            //setVariable(BR.handler, viewModel)
+            setVariable(BR.handler, viewModel)
         }
     }
 
