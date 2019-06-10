@@ -12,6 +12,10 @@ import kotlinx.android.synthetic.main.fragment_sights_list.*
 import org.koin.android.viewmodel.ext.android.sharedViewModel
 
 class SightsListFragment : Fragment() {
+    companion object Second {
+        fun newInstance() = SightsListFragment()
+    }
+
     private val adapter by lazy(LazyThreadSafetyMode.NONE) { SightsListAdapter(context!!) }
     private val viewModel by sharedViewModel<MainViewModel>()
 

@@ -7,4 +7,5 @@
     android:layout_height="match_parent"
     android:paddingHorizontal="12dip"
     android:paddingTop="12dip"
+    android:scrollbars="vertical"
     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
