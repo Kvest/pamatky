@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.SearchView
 import com.google.android.material.snackbar.Snackbar
 import com.kvest.pamatky.R
 import com.kvest.pamatky.ext.observe
@@ -23,7 +24,10 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        setSupportActionBar(toolbar)
+
         initViewModel()
+
         showList()
     }
 
@@ -33,7 +37,24 @@ class MainActivity : AppCompatActivity() {
         mapItem = menu.findItem(R.id.map)
         listItem = menu.findItem(R.id.list)
 
+        val searchMenuItem = menu.findItem(R.id.action_search)
+        val searchView = searchMenuItem.actionView as SearchView
+        initSearchView(searchView)
+
         return true
+    }
+
+    private fun initSearchView(searchView: SearchView) {
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String): Boolean {
+                viewModel.onSearchTextChanged(newText)
+                return true
+            }
+        })
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
