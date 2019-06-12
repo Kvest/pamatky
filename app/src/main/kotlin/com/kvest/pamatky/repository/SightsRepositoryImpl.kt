@@ -20,10 +20,12 @@ class SightsRepositoryImpl(
             val sights = sightsApi.getSights()
 
             //store sights to the local DB
-            sightDAO.deleteAll()
-
             val entities = withContext(Dispatchers.Default) { sights.map(::sightToEntity) }
-            sightDAO.insertSights(entities)
+
+            sightDAO.transaction {
+                deleteAll()
+                insertSights(entities)
+            }
         } catch (ex: Exception) {
             return false
         }
