@@ -1,6 +1,7 @@
 package com.kvest.pamatky.ui.main
 
 import androidx.lifecycle.*
+import com.kvest.pamatky.ext.containsIgnoreDiacritic
 import com.kvest.pamatky.repository.SightsRepository
 import com.kvest.pamatky.storage.dto.BasicSight
 import com.kvest.pamatky.utils.SingleLiveEvent
@@ -61,7 +62,7 @@ class MainViewModel(
         fun update() {
             val skipSearch = (searchText?.length ?: 0) < MIN_SEARCH_SIZE
             value = items
-                ?.filter { skipSearch || it.name.contains(searchText.orEmpty(), true) }
+                ?.filter { skipSearch || it.name.containsIgnoreDiacritic(searchText.orEmpty(), true) }
                 ?.sortedBy(BasicSight::name)
         }
     }

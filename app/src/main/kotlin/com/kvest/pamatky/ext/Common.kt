@@ -7,6 +7,7 @@ import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
+import java.text.Normalizer
 
 fun Context.showOnMap(lat: Float, lon: Float) {
     val uri = "geo:$lat,$lon".toUri()
@@ -29,3 +30,7 @@ inline fun AppCompatActivity.replaceFragment(containerViewId: Int, fragment: Fra
         replace(containerViewId, fragment, tag)
     }
 }
+
+fun String.removeDiacriticalMarks() = Normalizer.normalize(this, Normalizer.Form.NFD).replace(Regex("\\p{InCombiningDiacriticalMarks}+"), "")
+
+fun String.containsIgnoreDiacritic(other: String, ignoreCase: Boolean = false): Boolean = removeDiacriticalMarks().contains(other.removeDiacriticalMarks(), ignoreCase)
