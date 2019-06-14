@@ -6,11 +6,11 @@ import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
 
 @BindingAdapter("image", "placeholder")
-fun setImage(view: ImageView, imageSrc: String?, placeholder: Drawable) {
+fun ImageView.setImage(imageSrc: String?, placeholder: Drawable) {
     Glide
-        .with(view.context)
+        .with(context)
         .load(imageSrc)
         .placeholder(placeholder)
         .fitCenter()
-        .into(view)
+        .into(this)
 }
