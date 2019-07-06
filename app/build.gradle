@@ -31,47 +31,47 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation "androidx.appcompat:appcompat:$versions.appcompat"
-    implementation "androidx.recyclerview:recyclerview:$versions.recyclerview"
-    implementation "com.google.android.material:material:$versions.material"
+    implementation libs.kotlin_stdlib
+    implementation libs.androidx_appcompat
+    implementation libs.androidx_recyclerview
+    implementation libs.androidx_material
 
-    implementation "androidx.core:core-ktx:$versions.ktx"
+    implementation libs.ktx
 
     //Architecture components
-    implementation "androidx.lifecycle:lifecycle-runtime:$versions.lifecycle"
-    implementation "androidx.lifecycle:lifecycle-extensions:$versions.lifecycle"
-    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$versions.lifecycle_viewmodel_ktx"
-    kapt "androidx.lifecycle:lifecycle-compiler:$versions.lifecycle"
+    implementation libs.lifecycle_runtime
+    implementation libs.lifecycle_extensions
+    implementation libs.lifecycle_viewmodel_ktx
+    kapt libs.kapt_lifecycle
 
-    implementation "androidx.room:room-runtime:$versions.room"
-    kapt "androidx.room:room-compiler:$versions.room"
+    implementation libs.room_runtime
+    kapt libs.kapt_room
     // Kotlin Extensions and Coroutines support for Room
-    implementation "androidx.room:room-ktx:$versions.room"
+    implementation libs.room_ktx
 
     //databinding
-    kapt "com.android.databinding:compiler:$versions.databinding"
+    kapt libs.kapt_databinding
 
-    implementation "androidx.constraintlayout:constraintlayout:$versions.constraint_layout"
+    implementation libs.constraintlayout
 
     //coroutines
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$versions.coroutines"
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$versions.coroutines"
+    implementation libs.coroutines_core
+    implementation libs.coroutines_android
 
     //retrofit, okhttp, moshi
-    implementation "com.squareup.okhttp3:okhttp:$versions.okhttp"
-    implementation "com.squareup.okhttp3:logging-interceptor:$versions.okhttp"
-    implementation "com.squareup.retrofit2:retrofit:$versions.retrofit"
-    implementation "com.squareup.retrofit2:converter-moshi:$versions.retrofit"
-    kapt "com.squareup.moshi:moshi-kotlin-codegen:1.8.0"
+    implementation libs.okhttp
+    implementation libs.logging_interceptor
+    implementation libs.retrofit
+    implementation libs.moshi
+    kapt libs.kapt_moshi
 
     // Koin for Android
-    implementation "org.koin:koin-android:$versions.koin"
-    implementation "org.koin:koin-android-viewmodel:$versions.koin"
+    implementation libs.koin_android
+    implementation libs.koin_android_viewmodel
 
-    implementation "com.github.bumptech.glide:glide:$versions.glide"
-    kapt "com.github.bumptech.glide:compiler:$versions.glide"
+    implementation libs.glide
+    kapt libs.kapt_glide
 
     //maps
-    implementation "com.google.android.gms:play-services-maps:$versions.play_services_maps"
+    implementation libs.play_services_maps
 }

@@ -19,6 +19,9 @@ interface SightDAO {
     @Query("SELECT * FROM sights WHERE guid = :guid")
     fun listenSight(guid: String): LiveData<SightEntity>
 
+    @Query("SELECT * FROM sights WHERE guid = :guid")
+    suspend fun getSight(guid: String): SightEntity
+
     @Transaction
     suspend fun transaction(action: suspend SightDAO.() -> Unit) = action()
 }

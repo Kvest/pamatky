@@ -14,7 +14,7 @@ class MainViewModel(
 ) : ViewModel(), MainListHandler {
     val sights: LiveData<List<BasicSight>> by lazy(LazyThreadSafetyMode.NONE) {
         SightsLiveData(
-            sightsRepository.getBasicSightsList(),
+            sightsRepository.listenBasicSightsList(),
             searchText
         )
     }

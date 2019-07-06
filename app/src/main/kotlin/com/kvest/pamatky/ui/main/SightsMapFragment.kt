@@ -1,18 +1,24 @@
 package com.kvest.pamatky.ui.main
 
 import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
-import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.kvest.pamatky.ext.observe
 import com.kvest.pamatky.storage.dto.BasicSight
 import org.koin.android.viewmodel.ext.android.sharedViewModel
 import com.google.android.gms.maps.model.MarkerOptions
+import com.kvest.pamatky.R
+import com.google.android.gms.maps.SupportMapFragment
+import com.kvest.pamatky.ext.inTransaction
 
-class SightsMapFragment : SupportMapFragment(), OnMapReadyCallback, GoogleMap.OnInfoWindowClickListener {
+class SightsMapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
     companion object {
         fun newInstance() = SightsMapFragment()
     }
@@ -20,37 +26,20 @@ class SightsMapFragment : SupportMapFragment(), OnMapReadyCallback, GoogleMap.On
     private val viewModel by sharedViewModel<MainViewModel>()
     private lateinit var map: GoogleMap
 
-    override fun onCreate(bundle: Bundle?) {
-        super.onCreate(bundle)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        return inflater.inflate(R.layout.fragment_sights_map, container, false)
+    }
 
-        getMapAsync(this)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
+        mapFragment.getMapAsync(this)
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
         map = googleMap
-        map.setOnInfoWindowClickListener(this)
-
-//        map.setInfoWindowAdapter(object : GoogleMap.InfoWindowAdapter {
-//            private val view = layoutInflater.inflate(R.layout.popup, null, false)
-//
-//            override fun getInfoContents(marker: Marker) = null
-//
-//            override fun getInfoWindow(marker: Marker): View {
-//                view.name.text = marker.title
-//
-//                //TODO how to load image asynchronously? Implement some system which will preload images?
-//                runBlocking {
-//                    val futureBitmap = Glide.with(view.context)
-//                        .asBitmap()
-//                        .load(url)
-//                        .submit()
-//                    val bitmap = withContext(Dispatchers.IO){ futureBitmap.get() }
-//                    view.image.setImageBitmap(bitmap)
-//                }
-//
-//                return view
-//            }
-//        })
+        map.setOnMarkerClickListener(this)
 
         //Center map to Prague
         val pragueLatLng = LatLng(50.089079, 14.424482)
@@ -76,7 +65,16 @@ class SightsMapFragment : SupportMapFragment(), OnMapReadyCallback, GoogleMap.On
         }
     }
 
-    override fun onInfoWindowClick(marker: Marker) {
-        viewModel.onSightSelected(marker.tag as BasicSight)
+    override fun onMarkerClick(marker: Marker): Boolean {
+        val sight = marker.tag as BasicSight
+        childFragmentManager.inTransaction {
+            val fragment = SightDetailsFragment.newInstance(sight.guid)
+
+            setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left)
+            replace(R.id.sightDetailsContainer, fragment)
+            addToBackStack(null)
+        }
+
+        return true
     }
 }
