@@ -36,8 +36,8 @@ ext {
             retrofit                    : '2.6.0',
             okhttp                      : '4.0.0-RC1',
             koin                        : '2.0.1',
-            glide                       : '4.9.0',
-            play_services_maps          : '16.1.0'
+            play_services_maps          : '16.1.0',
+            picasso                     : '2.71828'
     ]
     libs = [
             kotlin_stdlib: "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version",
@@ -76,8 +76,7 @@ ext {
             koin_android: "org.koin:koin-android:$versions.koin",
             koin_android_viewmodel: "org.koin:koin-android-viewmodel:$versions.koin",
 
-            glide: "com.github.bumptech.glide:glide:$versions.glide",
-            kapt_glide: "com.github.bumptech.glide:compiler:$versions.glide",
+            picasso: "com.squareup.picasso:picasso:$versions.picasso",
 
             play_services_maps: "com.google.android.gms:play-services-maps:$versions.play_services_maps",
     ]

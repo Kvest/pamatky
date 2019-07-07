@@ -3,22 +3,22 @@ package com.kvest.pamatky.ui.utils
 import android.graphics.drawable.Drawable
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter
-import com.bumptech.glide.Glide
+import com.squareup.picasso.Picasso
+import kotlin.math.roundToInt
 
 @BindingAdapter("image", "placeholder")
 fun ImageView.setImage(imageSrc: String?, placeholder: Drawable) {
-    Glide
-        .with(context)
+    Picasso.get()
         .load(imageSrc)
         .placeholder(placeholder)
-        .fitCenter()
+        .fit()
         .into(this)
 }
 
-@BindingAdapter("photo")
-fun ImageView.setPhoto(imageSrc: String?) {
-    Glide
-        .with(context)
+@BindingAdapter("photo", "photo_height")
+fun ImageView.setPhoto(imageSrc: String?, height: Float) {
+    Picasso.get()
         .load(imageSrc)
+        .resize(0, height.roundToInt())
         .into(this)
 }

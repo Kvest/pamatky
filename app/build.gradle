@@ -69,8 +69,7 @@ dependencies {
     implementation libs.koin_android
     implementation libs.koin_android_viewmodel
 
-    implementation libs.glide
-    kapt libs.kapt_glide
+    implementation libs.picasso
 
     //maps
     implementation libs.play_services_maps
