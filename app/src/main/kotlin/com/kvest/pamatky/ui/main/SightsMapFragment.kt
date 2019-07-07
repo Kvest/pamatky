@@ -1,5 +1,7 @@
 package com.kvest.pamatky.ui.main
 
+import android.Manifest
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -17,6 +19,7 @@ import org.koin.android.viewmodel.ext.android.sharedViewModel
 import com.google.android.gms.maps.model.MarkerOptions
 import com.kvest.pamatky.R
 import com.google.android.gms.maps.SupportMapFragment
+import com.kvest.pamatky.ext.hasPermission
 import com.kvest.pamatky.ext.inTransaction
 
 class SightsMapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
@@ -24,6 +27,7 @@ class SightsMapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClic
         fun newInstance() = SightsMapFragment()
 
         private const val DETAILS_FRAGMENT_BACKSTACK_NAME = "details_fragment"
+        private const val LOCATION_REQUEST_CODE = 1
     }
 
     private val viewModel by sharedViewModel<MainViewModel>()
@@ -38,10 +42,28 @@ class SightsMapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClic
 
         val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
+
+        requestLocationPermission()
+    }
+
+    private fun requestLocationPermission() {
+        if (!hasPermission(Manifest.permission.ACCESS_FINE_LOCATION)) {
+            requestPermissions(arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), LOCATION_REQUEST_CODE)
+        }
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == LOCATION_REQUEST_CODE && grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            if (map != null) {
+                map.isMyLocationEnabled = true
+            }
+        }
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
         map = googleMap
+        map.isMyLocationEnabled = hasPermission(Manifest.permission.ACCESS_FINE_LOCATION)
         map.setOnMarkerClickListener(this)
 
         //Center map to Prague

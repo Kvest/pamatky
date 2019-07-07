@@ -2,7 +2,9 @@ package com.kvest.pamatky.ext
 
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
@@ -35,6 +37,14 @@ inline fun AppCompatActivity.replaceFragment(containerViewId: Int, fragment: Fra
         }
         replace(containerViewId, fragment, tag)
     }
+}
+
+inline fun Fragment.hasPermission(permission: String): Boolean {
+    return ContextCompat.checkSelfPermission(context!!, permission) == PackageManager.PERMISSION_GRANTED
+}
+
+inline fun AppCompatActivity.hasPermission(permission: String): Boolean {
+    return ContextCompat.checkSelfPermission(this, permission) == PackageManager.PERMISSION_GRANTED
 }
 
 fun String.removeDiacriticalMarks() = Normalizer.normalize(this, Normalizer.Form.NFD).replace(Regex("\\p{InCombiningDiacriticalMarks}+"), "")
