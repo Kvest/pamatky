@@ -6,6 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.kvest.pamatky.R
 import com.kvest.pamatky.ext.observe
 import kotlinx.android.synthetic.main.fragment_sight_details.*
@@ -29,6 +32,8 @@ class SightDetailsFragment : Fragment() {
     private val guid: String by lazy { arguments?.getString(ARG_GUID) ?: throw IllegalArgumentException("Guid is not set") }
     private val viewModel: SightDetailsFragmentViewModel by viewModel{ parametersOf(guid) }
 
+    private val adapter by lazy(LazyThreadSafetyMode.NONE) { SightPhotossAdapter(context!!) }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View
             = inflater.inflate(R.layout.fragment_sight_details, container, false)
 
@@ -36,7 +41,7 @@ class SightDetailsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        initView(view)
+        initView()
         initViewModel()
     }
 
@@ -44,9 +49,19 @@ class SightDetailsFragment : Fragment() {
         observe(viewModel.sightName) {
             sightName.text = it
         }
+        observe(viewModel.photos) {
+            it?.let { newItems ->
+                adapter.submitList(newItems)
+            }
+        }
     }
 
-    private fun initView(view: View) {
-        //TODO
+    private fun initView() {
+        val divider = DividerItemDecoration(context, RecyclerView.HORIZONTAL).also {
+            it.setDrawable(resources.getDrawable(R.drawable.photos_divider, null))
+        }
+        photosList.addItemDecoration(divider)
+        photosList.layoutManager = LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
+        photosList.adapter = adapter
     }
 }

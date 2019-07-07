@@ -17,12 +17,16 @@ class SightDetailsFragmentViewModel(
     private val _sightName = MutableLiveData<String>()
     val sightName: LiveData<String>
         get() = _sightName
+    private val _photos = MutableLiveData<List<String>>()
+    val photos: LiveData<List<String>>
+        get() = _photos
 
     init {
         viewModelScope.launch {
             sight = sightsRepository.getSight(guid)
 
             _sightName.value = sight.name
+            _photos.value = listOf(sight.profilePhoto) + sight.photos
         }
     }
 }

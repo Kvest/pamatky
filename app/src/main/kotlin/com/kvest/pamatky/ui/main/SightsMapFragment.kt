@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -21,6 +22,8 @@ import com.kvest.pamatky.ext.inTransaction
 class SightsMapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
     companion object {
         fun newInstance() = SightsMapFragment()
+
+        private const val DETAILS_FRAGMENT_BACKSTACK_NAME = "details_fragment"
     }
 
     private val viewModel by sharedViewModel<MainViewModel>()
@@ -67,12 +70,14 @@ class SightsMapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClic
 
     override fun onMarkerClick(marker: Marker): Boolean {
         val sight = marker.tag as BasicSight
+
+        childFragmentManager.popBackStack(DETAILS_FRAGMENT_BACKSTACK_NAME, FragmentManager.POP_BACK_STACK_INCLUSIVE)
         childFragmentManager.inTransaction {
             val fragment = SightDetailsFragment.newInstance(sight.guid)
 
-            setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left)
+            setCustomAnimations(R.anim.enter_up, R.anim.exit_down, R.anim.enter_down, R.anim.exit_up)
             replace(R.id.sightDetailsContainer, fragment)
-            addToBackStack(null)
+            addToBackStack(DETAILS_FRAGMENT_BACKSTACK_NAME)
         }
 
         return true

@@ -19,14 +19,20 @@ fun Context.showOnMap(lat: Float, lon: Float) {
 
 inline fun FragmentManager.inTransaction(block: FragmentTransaction.() -> Unit) = beginTransaction().apply(block).commit()
 
-inline fun AppCompatActivity.addFragment(containerViewId: Int, fragment: Fragment, tag: String? = null) {
+inline fun AppCompatActivity.addFragment(containerViewId: Int, fragment: Fragment, tag: String? = null, setPrimary: Boolean = false) {
     supportFragmentManager.inTransaction {
+        if (setPrimary) {
+            setPrimaryNavigationFragment(fragment)
+        }
         add(containerViewId, fragment, tag)
     }
 }
 
-inline fun AppCompatActivity.replaceFragment(containerViewId: Int, fragment: Fragment, tag: String? = null) {
+inline fun AppCompatActivity.replaceFragment(containerViewId: Int, fragment: Fragment, tag: String? = null, setPrimary: Boolean = false) {
     supportFragmentManager.inTransaction {
+        if (setPrimary) {
+            setPrimaryNavigationFragment(fragment)
+        }
         replace(containerViewId, fragment, tag)
     }
 }

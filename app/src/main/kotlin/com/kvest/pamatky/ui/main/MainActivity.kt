@@ -85,7 +85,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun showMap() {
-        replaceFragment(R.id.container, mapFragment)
+        replaceFragment(R.id.container, mapFragment, setPrimary = true)
 
         mapItem?.isVisible = false
         listItem?.isVisible = true

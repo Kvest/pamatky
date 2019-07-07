@@ -14,3 +14,11 @@ fun ImageView.setImage(imageSrc: String?, placeholder: Drawable) {
         .fitCenter()
         .into(this)
 }
+
+@BindingAdapter("photo")
+fun ImageView.setPhoto(imageSrc: String?) {
+    Glide
+        .with(context)
+        .load(imageSrc)
+        .into(this)
+}
