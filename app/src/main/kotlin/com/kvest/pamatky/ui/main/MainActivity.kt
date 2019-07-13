@@ -11,6 +11,7 @@ import com.kvest.pamatky.ext.observe
 import com.kvest.pamatky.ext.replaceFragment
 import com.kvest.pamatky.ext.showInWaze
 import com.kvest.pamatky.ext.showOnMap
+import com.kvest.pamatky.ui.gallery.GalleryActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import org.koin.android.viewmodel.ext.android.viewModel
 
@@ -82,7 +83,7 @@ class MainActivity : AppCompatActivity() {
             MainViewModel.Event.RefreshFailed -> Snackbar.make(container, R.string.failed_refresh_sights, Snackbar.LENGTH_SHORT).show()
             is MainViewModel.Event.ShowSightOnMap -> showOnMap(event.lat, event.lon)
             is MainViewModel.Event.ShowSightInWaze -> showInWaze(event.lat, event.lon)
-            is MainViewModel.Event.ShowSightDetails -> Unit//TODO()
+            is MainViewModel.Event.ShowGallery -> GalleryActivity.start(this, event.photos.toTypedArray())
         }
     }
 

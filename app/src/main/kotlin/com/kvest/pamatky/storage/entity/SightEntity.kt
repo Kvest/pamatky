@@ -18,5 +18,8 @@ data class SightEntity(
     @ColumnInfo(name = "profile_photo") val profilePhoto: String,
     @ColumnInfo(name = "profile_photo_small") val profilePhotoSmall: String,
     @ColumnInfo(name = "photos") val photos: List<String>
-)
+) {
+    val allPhotos: List<String>
+        get() = listOf(profilePhoto) + photos
+}
 

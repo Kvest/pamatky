@@ -32,7 +32,11 @@ class MainViewModel(
     }
 
     override fun onSightSelected(sight: BasicSight) {
-        events.value = Event.ShowSightDetails(sight.guid)
+        viewModelScope.launch {
+            val sightFull = sightsRepository.getSight(sight.guid)
+
+            events.value = Event.ShowGallery(sightFull.allPhotos)
+        }
     }
 
     override fun onShowOnMap(sight: BasicSight) {
@@ -75,6 +79,6 @@ class MainViewModel(
         object RefreshFailed : Event()
         class ShowSightOnMap(val lat: Float, val lon: Float) : Event()
         class ShowSightInWaze(val lat: Float, val lon: Float) : Event()
-        class ShowSightDetails(val guid: String) : Event()
+        class ShowGallery(val photos: List<String>) : Event()
     }
 }

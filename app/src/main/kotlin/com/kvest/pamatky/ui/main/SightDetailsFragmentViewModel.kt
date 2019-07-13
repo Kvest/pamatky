@@ -26,7 +26,7 @@ class SightDetailsFragmentViewModel(
             sight = sightsRepository.getSight(guid)
 
             _sightName.value = sight.name
-            _photos.value = listOf(sight.profilePhoto) + sight.photos
+            _photos.value = sight.allPhotos
         }
     }
 }
