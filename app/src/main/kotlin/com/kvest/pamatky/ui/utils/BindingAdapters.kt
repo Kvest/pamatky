@@ -25,6 +25,13 @@ fun ImageView.setPhoto(imageSrc: String?, height: Float) {
         .into(this)
 }
 
+@BindingAdapter("gallery_photo")
+fun ImageView.setGalleryPhoto(imageSrc: String?) {
+    Picasso.get()
+        .load(imageSrc)
+        .into(this)
+}
+
 @BindingAdapter("show_if_waze")
 fun View.showIfWaze(check: Boolean) {
     if (check) {
