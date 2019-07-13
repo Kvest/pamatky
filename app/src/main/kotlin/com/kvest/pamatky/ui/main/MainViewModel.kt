@@ -39,6 +39,10 @@ class MainViewModel(
         events.value = Event.ShowSightOnMap(sight.lat, sight.lon)
     }
 
+    override fun onShowInWaze(sight: BasicSight) {
+        events.value = Event.ShowSightInWaze(sight.lat, sight.lon)
+    }
+
     fun onSearchTextChanged(newText: String) {
         searchText.value = newText
     }
@@ -70,6 +74,7 @@ class MainViewModel(
     sealed class Event {
         object RefreshFailed : Event()
         class ShowSightOnMap(val lat: Float, val lon: Float) : Event()
+        class ShowSightInWaze(val lat: Float, val lon: Float) : Event()
         class ShowSightDetails(val guid: String) : Event()
     }
 }

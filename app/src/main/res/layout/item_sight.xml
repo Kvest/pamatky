@@ -31,13 +31,24 @@
             android:text="@{item.name}"
             android:textColor="#ffffff"
             android:textAppearance="@style/TextAppearance.AppCompat.Headline"/>
-        <ImageView
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="12dp"
-            android:layout_marginVertical="8dip"
-            app:srcCompat="@drawable/ic_location"
+            android:orientation="horizontal"
             android:layout_gravity="end|bottom"
-            android:onClick="@{() -> handler.onShowOnMap(item)}"/>
+            android:padding="8dp">
+            <ImageView
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_marginRight="12dp"
+                bind:show_if_waze="@{true}"
+                app:srcCompat="@drawable/ic_waze"
+                android:onClick="@{() -> handler.onShowInWaze(item)}"/>
+            <ImageView
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                app:srcCompat="@drawable/ic_location"
+                android:onClick="@{() -> handler.onShowOnMap(item)}"/>
+        </LinearLayout>
     </com.google.android.material.card.MaterialCardView>
 </layout>

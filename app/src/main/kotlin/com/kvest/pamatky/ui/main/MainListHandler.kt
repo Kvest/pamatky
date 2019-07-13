@@ -5,4 +5,5 @@ import com.kvest.pamatky.storage.dto.BasicSight
 interface MainListHandler {
     fun onSightSelected(sight: BasicSight)
     fun onShowOnMap(sight: BasicSight)
+    fun onShowInWaze(sight: BasicSight)
 }

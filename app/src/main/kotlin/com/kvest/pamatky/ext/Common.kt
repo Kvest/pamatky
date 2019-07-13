@@ -19,6 +19,14 @@ fun Context.showOnMap(lat: Float, lon: Float) {
     }
 }
 
+fun Context.showInWaze(lat: Float, lon: Float) {
+    val uri = "waze://?ll=$lat,$lon".toUri()
+    val intent = Intent(Intent.ACTION_VIEW, uri)
+    intent.resolveActivity(packageManager)?.let {
+        startActivity(intent)
+    }
+}
+
 inline fun FragmentManager.inTransaction(block: FragmentTransaction.() -> Unit) = beginTransaction().apply(block).commit()
 
 inline fun AppCompatActivity.addFragment(containerViewId: Int, fragment: Fragment, tag: String? = null, setPrimary: Boolean = false) {
@@ -46,6 +54,20 @@ inline fun Fragment.hasPermission(permission: String): Boolean {
 inline fun AppCompatActivity.hasPermission(permission: String): Boolean {
     return ContextCompat.checkSelfPermission(this, permission) == PackageManager.PERMISSION_GRANTED
 }
+
+inline fun Context.isPackageInstalled(packageName: String): Boolean {
+    var found = true
+
+    try {
+        packageManager.getPackageInfo(packageName, 0)
+    } catch (e: PackageManager.NameNotFoundException) {
+        found = false
+    }
+
+    return found
+}
+
+inline fun Context.isWazeInstalled(): Boolean = isPackageInstalled("com.waze")
 
 fun String.removeDiacriticalMarks() = Normalizer.normalize(this, Normalizer.Form.NFD).replace(Regex("\\p{InCombiningDiacriticalMarks}+"), "")
 
