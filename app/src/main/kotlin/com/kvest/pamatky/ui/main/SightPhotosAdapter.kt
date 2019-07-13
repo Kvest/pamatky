@@ -6,7 +6,7 @@ import com.kvest.pamatky.BR
 import com.kvest.pamatky.R
 import com.kvest.pamatky.ui.utils.EasyAdapter
 
-class SightPhotossAdapter(context: Context) : EasyAdapter<String>(context, DIFF_CALLBACK)  {
+class SightPhotosAdapter(context: Context) : EasyAdapter<String>(context, DIFF_CALLBACK)  {
     override val layoutId = R.layout.item_sight_photo
     override val variableId = BR.item
 

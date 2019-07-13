@@ -9,8 +9,10 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.kvest.pamatky.BR
 import com.kvest.pamatky.R
 import com.kvest.pamatky.ext.observe
+import com.kvest.pamatky.ui.gallery.GalleryActivity
 import kotlinx.android.synthetic.main.fragment_sight_details.*
 import java.lang.IllegalArgumentException
 import org.koin.android.viewmodel.ext.android.viewModel
@@ -32,7 +34,7 @@ class SightDetailsFragment : Fragment() {
     private val guid: String by lazy { arguments?.getString(ARG_GUID) ?: throw IllegalArgumentException("Guid is not set") }
     private val viewModel: SightDetailsFragmentViewModel by viewModel{ parametersOf(guid) }
 
-    private val adapter by lazy(LazyThreadSafetyMode.NONE) { SightPhotossAdapter(context!!) }
+    private val adapter by lazy(LazyThreadSafetyMode.NONE) { SightPhotosAdapter(context!!) }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View
             = inflater.inflate(R.layout.fragment_sight_details, container, false)
@@ -49,9 +51,16 @@ class SightDetailsFragment : Fragment() {
         observe(viewModel.sightName) {
             sightName.text = it
         }
+
         observe(viewModel.photos) {
             it?.let { newItems ->
                 adapter.submitList(newItems)
+            }
+        }
+
+        observe(viewModel.showGalleryEvent) {
+            it?.let { data ->
+                GalleryActivity.start(context!!, data.photos.toTypedArray(), data.position)
             }
         }
     }
@@ -62,6 +71,10 @@ class SightDetailsFragment : Fragment() {
         }
         photosList.addItemDecoration(divider)
         photosList.layoutManager = LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
+
+        adapter.holderInit = {
+            setVariable(BR.handler, viewModel)
+        }
         photosList.adapter = adapter
     }
 }

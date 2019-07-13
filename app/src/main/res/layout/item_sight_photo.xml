@@ -6,10 +6,14 @@
         <variable
             name="item"
             type="String"/>
+        <variable
+            name="handler"
+            type="com.kvest.pamatky.ui.main.SightPhotoItemHandler"/>
     </data>
     <ImageView
        android:layout_width="wrap_content"
        android:layout_height="match_parent"
        bind:photo="@{item}"
-       photo_height="@{@dimen/sight_details_photo_height}"/>
+       photo_height="@{@dimen/sight_details_photo_height}"
+       android:onClick="@{() -> handler.onSelect(item)}"/>
 </layout>
