@@ -4,6 +4,7 @@ import android.graphics.drawable.Drawable
 import android.view.View
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter
+import com.kvest.pamatky.R
 import com.kvest.pamatky.ext.isWazeInstalled
 import com.squareup.picasso.Picasso
 import kotlin.math.roundToInt
@@ -22,6 +23,7 @@ fun ImageView.setPhoto(imageSrc: String?, height: Float) {
     Picasso.get()
         .load(imageSrc)
         .resize(0, height.roundToInt())
+        .error(R.drawable.ic_load_image_error)
         .into(this)
 }
 
@@ -29,6 +31,8 @@ fun ImageView.setPhoto(imageSrc: String?, height: Float) {
 fun ImageView.setGalleryPhoto(imageSrc: String?) {
     Picasso.get()
         .load(imageSrc)
+        .placeholder(R.drawable.ic_image_loading)
+        .error(R.drawable.ic_load_image_error)
         .into(this)
 }
 
