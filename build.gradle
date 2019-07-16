@@ -37,7 +37,8 @@ ext {
             okhttp                      : '4.0.0-RC1',
             koin                        : '2.0.1',
             play_services_maps          : '16.1.0',
-            picasso                     : '2.71828'
+            picasso                     : '2.71828',
+            timber                      : '4.7.1'
     ]
     libs = [
             kotlin_stdlib: "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version",
@@ -77,6 +78,8 @@ ext {
             koin_android_viewmodel: "org.koin:koin-android-viewmodel:$versions.koin",
 
             picasso: "com.squareup.picasso:picasso:$versions.picasso",
+
+            timber: "com.jakewharton.timber:timber:$versions.timber",
 
             play_services_maps: "com.google.android.gms:play-services-maps:$versions.play_services_maps",
     ]

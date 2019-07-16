@@ -8,6 +8,7 @@ import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.create
+import timber.log.Timber
 import java.util.concurrent.TimeUnit
 
 val apiModule = module {
@@ -24,16 +25,17 @@ private fun buildOkHttpClient(): OkHttpClient {
         .connectTimeout(CONNECT_TIMEOUT_SECONDS, TimeUnit.SECONDS)
         .readTimeout(READ_TIMEOUT_SECONDS, TimeUnit.SECONDS)
     //interceptor
-//    okHttpBuilder.addNetworkInterceptor(HttpLoggingInterceptor(
-//        object : HttpLoggingInterceptor.Logger {
-//            override fun log(message: String) {
-//                Log.d("okHttp", message)
-//            }
-//        }
-//    ).apply {
-//        level = HttpLoggingInterceptor.Level.BODY
-//    })
-    return  okHttpBuilder.build()
+    okHttpBuilder.addNetworkInterceptor(HttpLoggingInterceptor(
+        object : HttpLoggingInterceptor.Logger {
+            override fun log(message: String) {
+                Timber.tag("okhttp").d(message)
+            }
+        }
+    ).apply {
+        level = HttpLoggingInterceptor.Level.BODY
+    })
+
+    return okHttpBuilder.build()
 }
 
 private fun buildMoshi() = Moshi.Builder().build()

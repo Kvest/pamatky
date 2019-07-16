@@ -71,6 +71,8 @@ dependencies {
 
     implementation libs.picasso
 
+    implementation libs.timber
+
     //maps
     implementation libs.play_services_maps
 }
