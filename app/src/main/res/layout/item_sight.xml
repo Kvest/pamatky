@@ -21,8 +21,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             bind:image="@{item.profilePhotoSmall}"
-            bind:placeholder="@{@drawable/list_placeholder}"
-            android:foreground="#55000000"/>
+            bind:placeholder="@{@drawable/list_placeholder}"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#77000000"/>
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
