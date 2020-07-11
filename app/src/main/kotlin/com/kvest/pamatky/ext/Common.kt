@@ -3,6 +3,7 @@ package com.kvest.pamatky.ext
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.net.toUri
@@ -24,6 +25,40 @@ fun Context.showInWaze(lat: Float, lon: Float) {
     val intent = Intent(Intent.ACTION_VIEW, uri)
     intent.resolveActivity(packageManager)?.let {
         startActivity(intent)
+    }
+}
+
+fun Context.dialPhoneNumber(phoneNumber: String) {
+    val intent = Intent(Intent.ACTION_DIAL).apply {
+        data = Uri.parse("tel:$phoneNumber")
+    }
+    if (intent.resolveActivity(packageManager) != null) {
+        startActivity(intent)
+    }
+}
+
+fun Context.openWebPage(url: String) {
+    val fixedUrl = if (!url.startsWith("http")) {
+        "http://$url"
+    } else {
+        url
+    }
+    val uri: Uri = Uri.parse(fixedUrl)
+
+    val intent = Intent(Intent.ACTION_VIEW, uri)
+    if (intent.resolveActivity(packageManager) != null) {
+        startActivity(intent)
+    }
+}
+
+fun Context.openFBPage(url: String) {
+    val fbUrl: Uri = Uri.parse("fb://facewebmodal/f?href=$url")
+    val intent = Intent(Intent.ACTION_VIEW, fbUrl)
+    if (intent.resolveActivity(packageManager) != null) {
+        startActivity(intent)
+    } else {
+        //open in web
+        openWebPage(url)
     }
 }
 

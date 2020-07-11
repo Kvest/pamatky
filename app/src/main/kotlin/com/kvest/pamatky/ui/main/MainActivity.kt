@@ -1,16 +1,16 @@
 package com.kvest.pamatky.ui.main
 
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.PopupMenu
 import androidx.appcompat.widget.SearchView
 import com.google.android.material.snackbar.Snackbar
 import com.kvest.pamatky.R
-import com.kvest.pamatky.ext.observe
-import com.kvest.pamatky.ext.replaceFragment
-import com.kvest.pamatky.ext.showInWaze
-import com.kvest.pamatky.ext.showOnMap
+import com.kvest.pamatky.ext.*
 import com.kvest.pamatky.ui.gallery.GalleryActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import org.koin.android.viewmodel.ext.android.viewModel
@@ -79,11 +79,38 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun onEvent(event: MainViewModel.Event?) {
-        when(event) {
+        when (event) {
             MainViewModel.Event.RefreshFailed -> Snackbar.make(container, R.string.failed_refresh_sights, Snackbar.LENGTH_SHORT).show()
             is MainViewModel.Event.ShowSightOnMap -> showOnMap(event.lat, event.lon)
             is MainViewModel.Event.ShowSightInWaze -> showInWaze(event.lat, event.lon)
             is MainViewModel.Event.ShowGallery -> GalleryActivity.start(this, event.photos.toTypedArray())
+            is MainViewModel.Event.PhoneCall -> onPhoneCall(event.guid, event.phoneNumbers)
+            is MainViewModel.Event.ShowSite -> openWebPage(event.url)
+            is MainViewModel.Event.ShowFacebook -> openFBPage(event.url)
+            is MainViewModel.Event.ShowInstagram -> openWebPage(event.url)
+        }
+    }
+
+    private fun onPhoneCall(guid: String, phoneNumbers: List<String>) {
+        if (phoneNumbers.size > 1) {
+            val targetView = findViewById<View>(R.id.container).findViewWithTag<View>(guid)
+            val popup = PopupMenu(this, targetView)
+
+            val menu = popup.menu
+            phoneNumbers.forEach { phoneNumber ->
+                menu.add(phoneNumber)
+            }
+
+            popup.setOnMenuItemClickListener{ menuItem ->
+                val selectedNumber = menuItem.title.toString()
+                dialPhoneNumber(selectedNumber)
+
+                true
+            }
+
+            popup.show()
+        } else {
+            dialPhoneNumber(phoneNumbers.first())
         }
     }
 

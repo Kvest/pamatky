@@ -13,7 +13,7 @@ interface SightDAO {
     @Query("DELETE FROM sights")
     suspend fun deleteAll()
 
-    @Query("SELECT guid, name, lat, lon, profile_photo_small FROM sights")
+    @Query("SELECT guid, name, lat, lon, profile_photo_small, phone, site, instagram, facebook, youtube FROM sights")
     fun listenBasicSights(): LiveData<List<BasicSight>>
 
     @Query("SELECT * FROM sights WHERE guid = :guid")

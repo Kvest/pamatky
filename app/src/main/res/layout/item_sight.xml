@@ -3,6 +3,8 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:bind="http://schemas.android.com/apk/res-auto">
     <data>
+        <import
+            type="android.view.View"/>
         <variable
             name="item"
             type="com.kvest.pamatky.storage.dto.BasicSight"/>
@@ -13,45 +15,91 @@
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:clickable="true"
+        android:focusable="true"
         android:layout_marginBottom="12dip"
         app:cardElevation="4dip"
         app:cardCornerRadius="8dip"
         android:onClick="@{() -> handler.onSightSelected(item)}">
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            bind:image="@{item.profilePhotoSmall}"
-            bind:placeholder="@{@drawable/list_placeholder}"/>
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="#77000000"/>
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="12dp"
-            android:layout_marginVertical="8dip"
-            android:text="@{item.name}"
-            android:textColor="#ffffff"
-            android:textAppearance="@style/TextAppearance.AppCompat.Headline"/>
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_gravity="end|bottom"
-            android:padding="8dp">
-            <ImageView
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:layout_marginRight="12dp"
-                bind:show_if_waze="@{true}"
-                app:srcCompat="@drawable/ic_waze"
-                android:onClick="@{() -> handler.onShowInWaze(item)}"/>
-            <ImageView
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                app:srcCompat="@drawable/ic_location"
-                android:onClick="@{() -> handler.onShowOnMap(item)}"/>
+            android:orientation="vertical">
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    bind:image="@{item.profilePhotoSmall}"
+                    bind:placeholder="@{@drawable/list_placeholder}"/>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="#77000000"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="12dp"
+                    android:layout_marginVertical="8dip"
+                    android:text="@{item.name}"
+                    android:textColor="#ffffff"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Headline"/>
+            </FrameLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="right">
+                <ImageView
+                    android:id="@+id/contactPhone"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:padding="8dp"
+                    app:srcCompat="@drawable/ic_action_call"
+                    android:tint="@color/colorPrimary"
+                    android:visibility="@{item.phone != null ? View.VISIBLE : View.GONE}"
+                    android:onClick="@{() -> handler.onCall(item)}"
+                    android:tag="@{item.guid}"/>
+                <ImageView
+                    android:id="@+id/contactSite"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:padding="8dp"
+                    app:srcCompat="@drawable/ic_web"
+                    android:visibility="@{item.site != null ? View.VISIBLE : View.GONE}"
+                    android:onClick="@{() -> handler.onShowSite(item)}"/>
+                <ImageView
+                    android:id="@+id/contactFacebook"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:padding="8dp"
+                    app:srcCompat="@drawable/ic_facebook"
+                    android:visibility="@{item.facebook != null ? View.VISIBLE : View.GONE}"
+                    android:onClick="@{() -> handler.onShowFacebook(item)}"/>
+                <ImageView
+                    android:id="@+id/contactInstagram"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:padding="5dp"
+                    app:srcCompat="@drawable/ic_instagram"
+                    android:visibility="@{item.instagram != null ? View.VISIBLE : View.GONE}"
+                    android:onClick="@{() -> handler.onShowInstargam(item)}"/>
+                <ImageView
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:padding="8dp"
+                    bind:show_if_waze="@{true}"
+                    app:srcCompat="@drawable/ic_waze"
+                    android:onClick="@{() -> handler.onShowInWaze(item)}"/>
+                <ImageView
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:padding="8dp"
+                    app:srcCompat="@drawable/ic_location"
+                    app:tint="@color/colorPrimary"
+                    android:onClick="@{() -> handler.onShowOnMap(item)}"/>
+            </LinearLayout>
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>
 </layout>

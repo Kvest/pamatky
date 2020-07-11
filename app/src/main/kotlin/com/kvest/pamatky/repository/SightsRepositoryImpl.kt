@@ -21,7 +21,9 @@ class SightsRepositoryImpl(
             val sights = sightsApi.getSights()
 
             //store sights to the local DB
-            val entities = withContext(Dispatchers.Default) { sights.map(::sightToEntity) }
+            val entities = withContext(Dispatchers.Default) {
+                sights.map(::sightToEntity)
+            }
 
             sightDAO.transaction {
                 deleteAll()

@@ -47,6 +47,31 @@ class MainViewModel(
         events.value = Event.ShowSightInWaze(sight.lat, sight.lon)
     }
 
+    override fun onCall(sight: BasicSight) {
+        sight.phone?.let { phone ->
+            val phones = phone.split(',')
+            events.value = Event.PhoneCall(sight.guid, phones)
+        }
+    }
+
+    override fun onShowSite(sight: BasicSight) {
+        sight.site?.let { url ->
+            events.value = Event.ShowSite(url)
+        }
+    }
+
+    override fun onShowInstargam(sight: BasicSight) {
+        sight.instagram?.let { url ->
+            events.value = Event.ShowInstagram(url)
+        }
+    }
+
+    override fun onShowFacebook(sight: BasicSight) {
+        sight.facebook?.let { url ->
+            events.value = Event.ShowFacebook(url)
+        }
+    }
+
     fun onSearchTextChanged(newText: String) {
         searchText.value = newText
     }
@@ -80,5 +105,9 @@ class MainViewModel(
         class ShowSightOnMap(val lat: Float, val lon: Float) : Event()
         class ShowSightInWaze(val lat: Float, val lon: Float) : Event()
         class ShowGallery(val photos: List<String>) : Event()
+        class PhoneCall(val guid: String, val phoneNumbers: List<String>) : Event()
+        class ShowSite(val url: String) : Event()
+        class ShowFacebook(val url: String) : Event()
+        class ShowInstagram(val url: String) : Event()
     }
 }

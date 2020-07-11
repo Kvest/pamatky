@@ -14,6 +14,11 @@ fun sightToEntity(sight: Sight): SightEntity {
         description = sight.description,
         lat = sight.lat,
         lon = sight.lon,
+        phone = sight.contacts.phone.ifBlank { null },
+        site = sight.contacts.site.ifBlank { null },
+        instagram = sight.contacts.instagram.ifBlank { null },
+        facebook = sight.contacts.facebook.ifBlank { null },
+        youtube = sight.contacts.youtube.ifBlank { null },
         profilePhoto = String.format(POTO_URL, sight.profilePhoto),
         profilePhotoSmall = String.format(POTO_URL, sight.profilePhotoSmall),
         photos = photos

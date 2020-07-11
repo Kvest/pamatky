@@ -11,7 +11,17 @@ class Sight(
     @Json(name = "Popis") val description: String,
     @Json(name = "ZemepisnaSirka") val lat: Float,
     @Json(name = "ZemepisnaDelka") val lon: Float,
+    @Json(name = "Kontakt") val contacts: Contacts,
     @Json(name = "GuidFotoProfilova") val profilePhoto: String,
     @Json(name = "GuidFotoZmensena") val profilePhotoSmall: String,
     @Json(name = "Foto") val photos: List<Photo>
+)
+
+@JsonClass(generateAdapter = true)
+class Contacts(
+    @Json(name = "Telefon") val phone: String,
+    @Json(name = "Www") val site: String,
+    @Json(name = "Facebook") val facebook: String,
+    @Json(name = "Youtube") val youtube: String,
+    @Json(name = "Instagram") val instagram: String
 )
