@@ -14,13 +14,13 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.kvest.pamatky.ext.observe
-import com.kvest.pamatky.storage.dto.BasicSight
 import org.koin.android.viewmodel.ext.android.sharedViewModel
 import com.google.android.gms.maps.model.MarkerOptions
 import com.kvest.pamatky.R
 import com.google.android.gms.maps.SupportMapFragment
 import com.kvest.pamatky.ext.hasPermission
 import com.kvest.pamatky.ext.inTransaction
+import com.kvest.pamatky.storage.entity.SightEntity
 
 class SightsMapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
     companion object {
@@ -77,7 +77,7 @@ class SightsMapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClic
         observe(viewModel.sights, ::onSights)
     }
 
-    private fun onSights(list: List<BasicSight>?) {
+    private fun onSights(list: List<SightEntity>?) {
         map.clear()
 
         list?.forEach { sight ->
@@ -91,7 +91,7 @@ class SightsMapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClic
     }
 
     override fun onMarkerClick(marker: Marker): Boolean {
-        val sight = marker.tag as BasicSight
+        val sight = marker.tag as SightEntity
 
         childFragmentManager.popBackStack(DETAILS_FRAGMENT_BACKSTACK_NAME, FragmentManager.POP_BACK_STACK_INCLUSIVE)
         childFragmentManager.inTransaction {

@@ -1,13 +1,13 @@
 package com.kvest.pamatky.ui.main
 
-import com.kvest.pamatky.storage.dto.BasicSight
+import com.kvest.pamatky.storage.entity.SightEntity
 
 interface MainListHandler {
-    fun onSightSelected(sight: BasicSight)
-    fun onShowOnMap(sight: BasicSight)
-    fun onShowInWaze(sight: BasicSight)
-    fun onCall(sight: BasicSight)
-    fun onShowSite(sight: BasicSight)
-    fun onShowInstargam(sight: BasicSight)
-    fun onShowFacebook(sight: BasicSight)
+    fun onSightSelected(sight: SightEntity)
+    fun onShowOnMap(sight: SightEntity)
+    fun onShowInWaze(sight: SightEntity)
+    fun onCall(sight: SightEntity)
+    fun onShowSite(sight: SightEntity)
+    fun onShowInstargam(sight: SightEntity)
+    fun onShowFacebook(sight: SightEntity)
 }

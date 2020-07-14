@@ -1,7 +1,9 @@
 package com.kvest.pamatky.repository
 
+import androidx.lifecycle.LiveData
 import com.kvest.pamatky.api.SightsApi
 import com.kvest.pamatky.storage.dao.SightDAO
+import com.kvest.pamatky.storage.entity.SightEntity
 import com.kvest.pamatky.utils.sightToEntity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -11,7 +13,9 @@ class SightsRepositoryImpl(
     private val sightsApi: SightsApi,
     private val sightDAO: SightDAO
 ) : SightsRepository {
-    override fun listenBasicSightsList() = sightDAO.listenBasicSights()
+    override fun listenSights(): LiveData<List<SightEntity>> = sightDAO.listenSights()
+
+    override fun listenSight(guid: String): LiveData<SightEntity> = sightDAO.listenSight(guid)
 
     override suspend fun getSight(guid: String) = sightDAO.getSight(guid)
 

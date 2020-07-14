@@ -7,7 +7,7 @@
             type="android.view.View"/>
         <variable
             name="item"
-            type="com.kvest.pamatky.storage.dto.BasicSight"/>
+            type="com.kvest.pamatky.storage.entity.SightEntity"/>
         <variable
             name="handler"
             type="com.kvest.pamatky.ui.main.MainListHandler"/>
@@ -46,60 +46,12 @@
                     android:textColor="#ffffff"
                     android:textAppearance="@style/TextAppearance.AppCompat.Headline"/>
             </FrameLayout>
-            <LinearLayout
+            <include
+                layout="@layout/sight_info_panel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="right">
-                <ImageView
-                    android:id="@+id/contactPhone"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:padding="8dp"
-                    app:srcCompat="@drawable/ic_action_call"
-                    android:tint="@color/colorPrimary"
-                    android:visibility="@{item.phone != null ? View.VISIBLE : View.GONE}"
-                    android:onClick="@{() -> handler.onCall(item)}"
-                    android:tag="@{item.guid}"/>
-                <ImageView
-                    android:id="@+id/contactSite"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:padding="8dp"
-                    app:srcCompat="@drawable/ic_web"
-                    android:visibility="@{item.site != null ? View.VISIBLE : View.GONE}"
-                    android:onClick="@{() -> handler.onShowSite(item)}"/>
-                <ImageView
-                    android:id="@+id/contactFacebook"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:padding="8dp"
-                    app:srcCompat="@drawable/ic_facebook"
-                    android:visibility="@{item.facebook != null ? View.VISIBLE : View.GONE}"
-                    android:onClick="@{() -> handler.onShowFacebook(item)}"/>
-                <ImageView
-                    android:id="@+id/contactInstagram"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:padding="5dp"
-                    app:srcCompat="@drawable/ic_instagram"
-                    android:visibility="@{item.instagram != null ? View.VISIBLE : View.GONE}"
-                    android:onClick="@{() -> handler.onShowInstargam(item)}"/>
-                <ImageView
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:padding="8dp"
-                    bind:show_if_waze="@{true}"
-                    app:srcCompat="@drawable/ic_waze"
-                    android:onClick="@{() -> handler.onShowInWaze(item)}"/>
-                <ImageView
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:padding="8dp"
-                    app:srcCompat="@drawable/ic_location"
-                    app:tint="@color/colorPrimary"
-                    android:onClick="@{() -> handler.onShowOnMap(item)}"/>
-            </LinearLayout>
+                bind:item="@{item}"
+                bind:handler="@{handler}"/>
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>
 </layout>
