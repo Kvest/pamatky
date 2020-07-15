@@ -1,6 +1,7 @@
 package com.kvest.pamatky.ui.main
 
 import androidx.lifecycle.*
+import com.kvest.pamatky.ext.cleanPhoneNumber
 import com.kvest.pamatky.ext.containsIgnoreDiacritic
 import com.kvest.pamatky.repository.SightsRepository
 import com.kvest.pamatky.storage.entity.SightEntity
@@ -49,7 +50,8 @@ class MainViewModel(
 
     override fun onCall(sight: SightEntity) {
         sight.phone?.let { phone ->
-            val phones = phone.split(',')
+            val phones = phone.split(',').map { it.cleanPhoneNumber() }
+
             events.value = Event.PhoneCall(sight.guid, phones)
         }
     }

@@ -64,7 +64,7 @@ fun Context.openFBPage(url: String) {
 
 inline fun FragmentManager.inTransaction(block: FragmentTransaction.() -> Unit) = beginTransaction().apply(block).commit()
 
-inline fun AppCompatActivity.addFragment(containerViewId: Int, fragment: Fragment, tag: String? = null, setPrimary: Boolean = false) {
+fun AppCompatActivity.addFragment(containerViewId: Int, fragment: Fragment, tag: String? = null, setPrimary: Boolean = false) {
     supportFragmentManager.inTransaction {
         if (setPrimary) {
             setPrimaryNavigationFragment(fragment)
@@ -73,7 +73,7 @@ inline fun AppCompatActivity.addFragment(containerViewId: Int, fragment: Fragmen
     }
 }
 
-inline fun AppCompatActivity.replaceFragment(containerViewId: Int, fragment: Fragment, tag: String? = null, setPrimary: Boolean = false) {
+fun AppCompatActivity.replaceFragment(containerViewId: Int, fragment: Fragment, tag: String? = null, setPrimary: Boolean = false) {
     supportFragmentManager.inTransaction {
         if (setPrimary) {
             setPrimaryNavigationFragment(fragment)
@@ -82,15 +82,15 @@ inline fun AppCompatActivity.replaceFragment(containerViewId: Int, fragment: Fra
     }
 }
 
-inline fun Fragment.hasPermission(permission: String): Boolean {
+fun Fragment.hasPermission(permission: String): Boolean {
     return ContextCompat.checkSelfPermission(context!!, permission) == PackageManager.PERMISSION_GRANTED
 }
 
-inline fun AppCompatActivity.hasPermission(permission: String): Boolean {
+fun AppCompatActivity.hasPermission(permission: String): Boolean {
     return ContextCompat.checkSelfPermission(this, permission) == PackageManager.PERMISSION_GRANTED
 }
 
-inline fun Context.isPackageInstalled(packageName: String): Boolean {
+fun Context.isPackageInstalled(packageName: String): Boolean {
     var found = true
 
     try {
@@ -102,8 +102,15 @@ inline fun Context.isPackageInstalled(packageName: String): Boolean {
     return found
 }
 
-inline fun Context.isWazeInstalled(): Boolean = isPackageInstalled("com.waze")
+fun Context.isWazeInstalled(): Boolean = isPackageInstalled("com.waze")
 
 fun String.removeDiacriticalMarks() = Normalizer.normalize(this, Normalizer.Form.NFD).replace(Regex("\\p{InCombiningDiacriticalMarks}+"), "")
 
 fun String.containsIgnoreDiacritic(other: String, ignoreCase: Boolean = false): Boolean = removeDiacriticalMarks().contains(other.removeDiacriticalMarks(), ignoreCase)
+
+private val PhoneNumberCleanerRegex = Regex("""[^\d+]""")
+
+/***
+ * Method delete all not phone's number characters(not digits and not + sign)
+ */
+fun String.cleanPhoneNumber(): String = this.replace(PhoneNumberCleanerRegex, "")
